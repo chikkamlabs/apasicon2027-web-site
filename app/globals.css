@@ -1,26 +1,70 @@
 @import "tailwindcss";
 
+@theme {
+  --color-white: #FFFFFF;
+  --color-royal-gold: #D4AF37;
+  --color-black: #111111;
+  --color-godavari-teal: #187A83;
+  --color-warm-offwhite: #F7F7F5;
+  --color-warm-off-white: #F7F7F5;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* White — Main background: Main pages, content sections, forms and cards */
+  --white: #FFFFFF;
+  --color-white: #FFFFFF;
+
+  /* Royal Gold — Brand accent: Golden Jubilee highlights, buttons, borders, icons and decorative lines */
+  --royal-gold: #D4AF37;
+  --color-royal-gold: #D4AF37;
+
+  /* Black — Typography: Headings, navigation, body text and footer backgrounds */
+  --black: #111111;
+  --color-black: #111111;
+
+  /* Godavari Teal — Supporting accent: Links, medical icons, secondary buttons and subtle highlights */
+  --godavari-teal: #187A83;
+  --color-godavari-teal: #187A83;
+
+  /* Warm Off-White — Alternate background: Alternate sections to create depth while keeping the website light */
+  --warm-off-white: #F7F7F5;
+  --color-warm-offwhite: #F7F7F5;
+  --color-warm-off-white: #F7F7F5;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes committeeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.animate-committee-scroll {
+  display: flex;
+  width: max-content;
+  animation: committeeScroll 32s linear infinite;
 }
+
+.animate-committee-scroll:hover {
+  animation-play-state: paused;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
