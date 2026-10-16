@@ -97,7 +97,7 @@ export default function JoinSection() {
                 href="https://asiindia.org/member-application/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#187A83] hover:bg-[#136067] text-white font-bold text-sm sm:text-base shadow-sm hover:shadow-md transition-all duration-200 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#187A83] hover:bg-[#136067]bg-[#D4AF37] hover:bg-[#c59f2a] text-white font-bold text-sm sm:text-base shadow-sm hover:shadow-md transition-all duration-200 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
               >
                 <span>ASI Membership</span>
                 <ExternalLink className="w-4 h-4" />

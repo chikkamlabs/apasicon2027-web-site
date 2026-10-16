@@ -19,7 +19,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden py-8 sm:py-16 lg:py-20 border-b border-zinc-200">
+    <section className="relative overflow-hidden py-8 sm:py-16 lg:py-8 border-b border-zinc-200">
       {/* Background Image: public/herobg1.png */}
       <div className="absolute inset-0 z-0">
         <Image

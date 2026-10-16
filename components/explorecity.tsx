@@ -19,8 +19,8 @@ interface CityPlace {
 const PLACES_DATA: CityPlace[] = [
   {
     id: 'godavari',
-    name: 'Godavari River & Ghats',
-    tagline: 'Iconic Bridges & Evening Harathi',
+    name: 'Godavari River & Hills',
+    tagline: 'Iconic Bridges, Godavari & Hills',
     description:
       'The sacred lifeline of the city, renowned for picturesque river cruises, the historic Havelock Bridge, the majestic Godavari Arch Bridge, and the mesmerizing evening Godavari Harathi.',
     distance: '12 km from GSL',
@@ -65,30 +65,30 @@ const PLACES_DATA: CityPlace[] = [
       'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=800&q=80',
     category: 'Floral & Botanical',
   },
-  {
-    id: 'dowleswaram',
-    name: 'Dowleswaram Barrage & Museum',
-    tagline: 'Historic Engineering Marvel',
-    description:
-      'Built across the Akhanda Godavari with 175 crest gates, this colossal barrage features panoramic river vistas and the Sir Arthur Cotton Museum celebrating agricultural engineering heritage.',
-    distance: '18 km from GSL',
-    travelTime: 'approx. 25 mins',
-    image:
-      'https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&w=800&q=80',
-    category: 'Architecture & History',
-  },
-  {
-    id: 'iskcon',
-    name: 'ISKCON Temple (Gowthami Ghat)',
-    tagline: 'Sacred Riverside Spiritual Haven',
-    description:
-      'One of the largest ISKCON centres in South India, situated directly along Gowthami Ghat with sculpted domes, serene meditation halls, and tranquil riverside gardens.',
-    distance: '13 km from GSL',
-    travelTime: 'approx. 20 mins',
-    image:
-      'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=800&q=80',
-    category: 'Spiritual & Culture',
-  },
+  // {
+  //   id: 'dowleswaram',
+  //   name: 'Dowleswaram Barrage & Museum',
+  //   tagline: 'Historic Engineering Marvel',
+  //   description:
+  //     'Built across the Akhanda Godavari with 175 crest gates, this colossal barrage features panoramic river vistas and the Sir Arthur Cotton Museum celebrating agricultural engineering heritage.',
+  //   distance: '18 km from GSL',
+  //   travelTime: 'approx. 25 mins',
+  //   image:
+  //     'https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&w=800&q=80',
+  //   category: 'Architecture & History',
+  // },
+  // {
+  //   id: 'iskcon',
+  //   name: 'ISKCON Temple (Gowthami Ghat)',
+  //   tagline: 'Sacred Riverside Spiritual Haven',
+  //   description:
+  //     'One of the largest ISKCON centres in South India, situated directly along Gowthami Ghat with sculpted domes, serene meditation halls, and tranquil riverside gardens.',
+  //   distance: '13 km from GSL',
+  //   travelTime: 'approx. 20 mins',
+  //   image:
+  //     'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=800&q=80',
+  //   category: 'Spiritual & Culture',
+  // },
 ];
 
 const containerVariants: Variants = {

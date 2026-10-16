@@ -55,7 +55,7 @@ export default function Header() {
                 height={172}
                 priority
                 referrerPolicy="no-referrer"
-                className="h-12 sm:h-14 w-auto object-contain"
+                className="h-14 sm:h-14 w-auto object-contain"
               />
               <span className="font-black text-sm sm:text-base lg:text-lg tracking-tight text-[#111111] whitespace-nowrap">
                 ASI | APASICON 2027
@@ -186,7 +186,7 @@ export default function Header() {
                 height={1254}
                 priority
                 referrerPolicy="no-referrer"
-                className="h-12 sm:h-14 w-auto object-contain"
+                className="h-16 sm:h-14 w-auto object-contain"
               />
             </Link>
           </div>
