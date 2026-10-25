@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import { Fraunces } from 'next/font/google';
 import {
   ArrowLeft,
   Search,
@@ -19,6 +20,11 @@ import {
   Send,
   X,
 } from 'lucide-react';
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 interface DelegateRecord {
   regNumber: string;
@@ -116,7 +122,9 @@ export default function DelegateDataPage() {
               <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-[#D4AF37]/50 text-[#D4AF37] flex items-center justify-center mx-auto mb-3 shadow-2xs">
                 <FileText className="w-6 h-6" />
               </div>
-              <h1 className="text-2xl sm:text-3xl font-black text-[#111111] tracking-tight">
+              <h1
+                className={`${fraunces.className} text-2xl sm:text-3xl font-semibold text-[#111111] tracking-tight`}
+              >
                 Check and Modify your registration details.
               </h1>
               <div className="w-16 h-1 bg-[#D4AF37] mx-auto mt-3 rounded-full" />
@@ -194,7 +202,9 @@ export default function DelegateDataPage() {
                 <div className="flex items-center justify-between pb-4 border-b border-zinc-100">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                    <h3 className="font-bold text-base text-[#111111]">
+                    <h3
+                      className={`${fraunces.className} font-semibold text-base sm:text-lg text-[#111111]`}
+                    >
                       Registration Record Found
                     </h3>
                   </div>
@@ -271,7 +281,9 @@ export default function DelegateDataPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs">
           <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 border border-zinc-200 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
             <div className="flex items-center justify-between pb-4 border-b border-zinc-200">
-              <h3 className="font-black text-lg text-zinc-950 flex items-center gap-2">
+              <h3
+                className={`${fraunces.className} font-semibold text-lg sm:text-xl text-zinc-950 flex items-center gap-2`}
+              >
                 <Edit3 className="w-4 h-4 text-[#D4AF37]" />
                 <span>Request to Modify Details</span>
               </h3>

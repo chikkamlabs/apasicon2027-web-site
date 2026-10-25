@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import { Fraunces } from 'next/font/google';
 import {
   User,
   GraduationCap,
@@ -18,6 +19,11 @@ import {
   Sparkles,
   AlertCircle,
 } from 'lucide-react';
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 interface TariffOption {
   id: string;
@@ -192,7 +198,9 @@ function RegistrationFormContent() {
                 <div className="w-16 h-16 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto mb-3">
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
-                <h1 className="text-2xl sm:text-3xl font-black text-zinc-950">
+                <h1
+                  className={`${fraunces.className} text-2xl sm:text-3xl font-semibold text-zinc-950`}
+                >
                   Registration Submitted Successfully!
                 </h1>
                 <p className="text-sm text-zinc-600 mt-2">
@@ -322,7 +330,9 @@ function RegistrationFormContent() {
                   <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
                   <span>Official Delegate Registration</span>
                 </div>
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#111111] tracking-tight">
+                <h1
+                  className={`${fraunces.className} text-2xl sm:text-3xl lg:text-4xl font-semibold text-[#111111] tracking-tight`}
+                >
                   APASICON 2027 Registration
                 </h1>
                 <p className="mt-2 text-xs sm:text-sm font-medium text-zinc-600 max-w-xl mx-auto">
@@ -340,7 +350,9 @@ function RegistrationFormContent() {
               {/* 1. TARIFF CATEGORY SELECTION */}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-base sm:text-lg font-black text-[#111111] flex items-center gap-2">
+                  <h2
+                    className={`${fraunces.className} text-base sm:text-lg lg:text-xl font-semibold text-[#111111] flex items-center gap-2`}
+                  >
                     <span className="w-6 h-6 rounded-full bg-[#D4AF37] text-zinc-950 text-xs flex items-center justify-center font-bold">
                       1
                     </span>
@@ -388,7 +400,9 @@ function RegistrationFormContent() {
 
               {/* 2. REGISTRATION DETAILS */}
               <div className="pt-6 border-t border-zinc-200 space-y-5">
-                <h2 className="text-base sm:text-lg font-black text-[#111111] flex items-center gap-2">
+                <h2
+                  className={`${fraunces.className} text-base sm:text-lg lg:text-xl font-semibold text-[#111111] flex items-center gap-2`}
+                >
                   <span className="w-6 h-6 rounded-full bg-[#187A83] text-white text-xs flex items-center justify-center font-bold">
                     2
                   </span>
@@ -495,7 +509,9 @@ function RegistrationFormContent() {
               <div className="pt-6 border-t border-zinc-200 space-y-5">
                 <div className="flex items-center gap-2">
                   <GraduationCap className="w-5 h-5 text-[#187A83]" />
-                  <h2 className="text-base sm:text-lg font-black text-[#111111] uppercase tracking-wide">
+                  <h2
+                    className={`${fraunces.className} text-base sm:text-lg lg:text-xl font-semibold text-[#111111] uppercase tracking-wide`}
+                  >
                     PROFESSIONAL DETAILS
                   </h2>
                 </div>
@@ -564,19 +580,25 @@ function RegistrationFormContent() {
                     Qualification
                   </label>
                   <div className="overflow-x-auto rounded-xl border border-zinc-200">
-                    <table className="min-w-full divide-y divide-zinc-200 text-left text-xs sm:text-sm">
+                    <table className="w-full min-w-[360px] table-fixed divide-y divide-zinc-200 text-left text-xs sm:text-sm">
+                      <colgroup>
+                        <col className="w-14" />
+                        <col />
+                        <col className="w-28" />
+                        <col className="w-32" />
+                      </colgroup>
                       <thead className="bg-zinc-100 text-zinc-700 font-bold uppercase tracking-wider">
                         <tr>
-                          <th className="px-4 py-3">Level</th>
-                          <th className="px-4 py-3">College</th>
-                          <th className="px-4 py-3">Year Passed Out</th>
-                          <th className="px-4 py-3">Current Year</th>
+                          <th className="px-3 py-3">Level</th>
+                          <th className="px-3 py-3">College</th>
+                          <th className="px-3 py-3">Year Passed Out</th>
+                          <th className="px-3 py-3">Current Year</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-zinc-200 bg-white">
                         <tr>
-                          <td className="px-4 py-3 font-bold text-zinc-900">UG</td>
-                          <td className="px-4 py-2">
+                          <td className="px-3 py-3 font-bold text-zinc-900">UG</td>
+                          <td className="px-3 py-2">
                             <input
                               type="text"
                               value={ugQualification.college}
@@ -587,7 +609,7 @@ function RegistrationFormContent() {
                               className="w-full px-3 py-1.5 rounded-lg border border-zinc-200 text-xs sm:text-sm focus:border-[#187A83] outline-none"
                             />
                           </td>
-                          <td className="px-4 py-2">
+                          <td className="px-3 py-2">
                             <input
                               type="text"
                               value={ugQualification.yearPassedOut}
@@ -601,7 +623,7 @@ function RegistrationFormContent() {
                               className="w-full px-3 py-1.5 rounded-lg border border-zinc-200 text-xs sm:text-sm focus:border-[#187A83] outline-none"
                             />
                           </td>
-                          <td className="px-4 py-2">
+                          <td className="px-3 py-2">
                             <input
                               type="text"
                               value={ugQualification.currentYear}
@@ -617,8 +639,8 @@ function RegistrationFormContent() {
                           </td>
                         </tr>
                         <tr>
-                          <td className="px-4 py-3 font-bold text-zinc-900">PG</td>
-                          <td className="px-4 py-2">
+                          <td className="px-3 py-3 font-bold text-zinc-900">PG</td>
+                          <td className="px-3 py-2">
                             <input
                               type="text"
                               value={pgQualification.college}
@@ -629,7 +651,7 @@ function RegistrationFormContent() {
                               className="w-full px-3 py-1.5 rounded-lg border border-zinc-200 text-xs sm:text-sm focus:border-[#187A83] outline-none"
                             />
                           </td>
-                          <td className="px-4 py-2">
+                          <td className="px-3 py-2">
                             <input
                               type="text"
                               value={pgQualification.yearPassedOut}
@@ -639,11 +661,11 @@ function RegistrationFormContent() {
                                   yearPassedOut: e.target.value,
                                 })
                               }
-                              placeholder="Passing Year or Expected"
+                              placeholder="Year"
                               className="w-full px-3 py-1.5 rounded-lg border border-zinc-200 text-xs sm:text-sm focus:border-[#187A83] outline-none"
                             />
                           </td>
-                          <td className="px-4 py-2">
+                          <td className="px-3 py-2">
                             <input
                               type="text"
                               value={pgQualification.currentYear}
@@ -653,7 +675,7 @@ function RegistrationFormContent() {
                                   currentYear: e.target.value,
                                 })
                               }
-                              placeholder="e.g. 2nd Year / Completed"
+                              placeholder="e.g. 2nd Year"
                               className="w-full px-3 py-1.5 rounded-lg border border-zinc-200 text-xs sm:text-sm focus:border-[#187A83] outline-none"
                             />
                           </td>
@@ -702,7 +724,9 @@ function RegistrationFormContent() {
               <div className="pt-6 border-t border-zinc-200 space-y-5">
                 <div className="flex items-center gap-2">
                   <Mail className="w-5 h-5 text-[#187A83]" />
-                  <h2 className="text-base sm:text-lg font-black text-[#111111] uppercase tracking-wide">
+                  <h2
+                    className={`${fraunces.className} text-base sm:text-lg lg:text-xl font-semibold text-[#111111] uppercase tracking-wide`}
+                  >
                     CONTACT DETAILS
                   </h2>
                 </div>
@@ -827,7 +851,9 @@ function RegistrationFormContent() {
               <div className="pt-6 border-t border-zinc-200 space-y-4">
                 <div className="flex items-center gap-2">
                   <Utensils className="w-5 h-5 text-[#187A83]" />
-                  <h2 className="text-base sm:text-lg font-black text-[#111111] uppercase tracking-wide">
+                  <h2
+                    className={`${fraunces.className} text-base sm:text-lg lg:text-xl font-semibold text-[#111111] uppercase tracking-wide`}
+                  >
                     ADDITIONAL DETAILS
                   </h2>
                 </div>
@@ -867,7 +893,9 @@ function RegistrationFormContent() {
               <div className="pt-6 border-t border-zinc-200 space-y-4">
                 <div className="flex items-center gap-2">
                   <Users className="w-5 h-5 text-[#187A83]" />
-                  <h2 className="text-base sm:text-lg font-black text-[#111111] uppercase tracking-wide">
+                  <h2
+                    className={`${fraunces.className} text-base sm:text-lg lg:text-xl font-semibold text-[#111111] uppercase tracking-wide`}
+                  >
                     ACCOMPANYING PERSONS
                   </h2>
                 </div>
@@ -916,7 +944,9 @@ function RegistrationFormContent() {
 
               {/* 7. REMARKS */}
               <div className="pt-6 border-t border-zinc-200 space-y-4">
-                <h2 className="text-base sm:text-lg font-black text-[#111111] uppercase tracking-wide">
+                <h2
+                  className={`${fraunces.className} text-base sm:text-lg lg:text-xl font-semibold text-[#111111] uppercase tracking-wide`}
+                >
                   REMARKS
                 </h2>
                 <div>
@@ -934,7 +964,9 @@ function RegistrationFormContent() {
               <div className="pt-6 border-t border-zinc-200 space-y-5">
                 <div className="flex items-center gap-2">
                   <CreditCard className="w-5 h-5 text-[#D4AF37]" />
-                  <h2 className="text-base sm:text-lg font-black text-[#111111] uppercase tracking-wide">
+                  <h2
+                    className={`${fraunces.className} text-base sm:text-lg lg:text-xl font-semibold text-[#111111] uppercase tracking-wide`}
+                  >
                     PAYMENT
                   </h2>
                 </div>

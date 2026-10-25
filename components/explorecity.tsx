@@ -4,6 +4,12 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, type Variants } from 'motion/react';
 import { MapPin, RotateCw, Compass, Sparkles } from 'lucide-react';
+import { Fraunces } from 'next/font/google';
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 interface CityPlace {
   id: string;
@@ -142,7 +148,9 @@ export default function ExploreCity() {
             <Compass className="w-3.5 h-3.5" />
             <span>Delegate Experience</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#111111]">
+          <h2
+            className={`${fraunces.className} text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-[#111111]`}
+          >
             Explore Rajamahendravaram
           </h2>
           <div className="w-20 h-1 bg-[#D4AF37] mx-auto mt-4 rounded-full" />
@@ -204,7 +212,9 @@ export default function ExploreCity() {
 
                     {/* Bottom Info on Front */}
                     <div className="relative z-10 p-6 space-y-2">
-                      <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight drop-shadow-md">
+                      <h3
+                        className={`${fraunces.className} text-xl sm:text-2xl font-semibold text-white tracking-tight drop-shadow-md`}
+                      >
                         {place.name}
                       </h3>
                       <p className="text-xs font-medium text-zinc-300">
@@ -232,7 +242,9 @@ export default function ExploreCity() {
                       </div>
 
                       {/* Name on Back */}
-                      <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                      <h3
+                        className={`${fraunces.className} text-xl sm:text-2xl font-semibold text-white tracking-tight`}
+                      >
                         {place.name}
                       </h3>
 

@@ -3,7 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Outfit } from 'next/font/google';
 import { Menu, X, ChevronDown } from 'lucide-react';
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  weight: '700',
+  display: 'swap',
+});
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -57,7 +64,9 @@ export default function Header() {
                 referrerPolicy="no-referrer"
                 className="h-14 sm:h-14 w-auto object-contain"
               />
-              <span className="font-black text-sm sm:text-base lg:text-lg tracking-tight text-[#111111] whitespace-nowrap">
+              <span
+                className={`${outfit.className} text-sm sm:text-base lg:text-lg tracking-tight text-[#111111] whitespace-nowrap`}
+              >
                 ASI | APASICON 2027
               </span>
             </Link>

@@ -4,6 +4,12 @@ import React from 'react';
 import Image from 'next/image';
 import { motion } from 'motion/react';
 import { MapPin, ShieldCheck, Wifi, ExternalLink } from 'lucide-react';
+import { Fraunces } from 'next/font/google';
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 export default function VenueSection() {
   const venueFeatures = [
@@ -42,7 +48,9 @@ export default function VenueSection() {
           >
             {/* Heading - Decreased size on mobile */}
             <div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-[#111111] leading-tight">
+              <h2
+                className={`${fraunces.className} text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-[#111111] leading-tight`}
+              >
                 The Venue: GSL Medical College
               </h2>
               <div className="w-16 sm:w-20 h-1 bg-[#D4AF37] mt-3 sm:mt-4 rounded-full" />

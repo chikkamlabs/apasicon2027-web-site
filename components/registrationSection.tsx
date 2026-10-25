@@ -4,6 +4,17 @@ import React from 'react';
 import Link from 'next/link';
 import { motion, type Variants } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
+import { Fraunces, DM_Sans } from 'next/font/google';
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  display: 'swap',
+});
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 interface TariffPlan {
   category: string;
@@ -66,7 +77,7 @@ export default function RegistrationSection() {
   return (
     <section
       id="tariffs"
-      className="relative overflow-hidden bg-[#F7F7F5] py-12 sm:py-16 md:py-20 lg:py-24 border-b border-zinc-200 scroll-mt-6"
+      className={`${dmSans.className} relative overflow-hidden bg-[#F7F7F5] py-12 sm:py-16 md:py-20 lg:py-24 border-b border-zinc-200 scroll-mt-6`}
     >
       {/* Decorative top transition line */}
       <motion.div
@@ -86,7 +97,9 @@ export default function RegistrationSection() {
           transition={{ duration: 0.55 }}
           className="text-center mb-8 sm:mb-12 lg:mb-14"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-[#111111]">
+          <h2
+            className={`${fraunces.className} text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-[#111111]`}
+          >
             Registration Tariff
           </h2>
           <div className="w-16 sm:w-20 h-1 bg-[#D4AF37] mx-auto mt-3 sm:mt-4 rounded-full" />
@@ -111,7 +124,9 @@ export default function RegistrationSection() {
             >
               <div>
                 {/* Category Name */}
-                <h3 className="text-base sm:text-lg lg:text-xl font-black text-[#111111] tracking-tight pb-2.5 sm:pb-3 border-b border-zinc-100">
+                <h3
+                  className={`${fraunces.className} text-base sm:text-lg lg:text-xl font-semibold text-[#111111] tracking-tight pb-2.5 sm:pb-3 border-b border-zinc-100`}
+                >
                   {plan.category}
                 </h3>
 
@@ -121,13 +136,13 @@ export default function RegistrationSection() {
                   <div className="space-y-1 text-[11px] sm:text-xs text-zinc-400">
                     <div className="flex items-center justify-between">
                       <span>Early Bird:</span>
-                      <span className="line-through font-semibold text-zinc-400 text-xs sm:text-sm">
+                      <span className="line-through font-semibold tabular-nums text-zinc-400 text-xs sm:text-sm">
                         {plan.earlyBird}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span>Slab 1:</span>
-                      <span className="line-through font-semibold text-zinc-400 text-xs sm:text-sm">
+                      <span className="line-through font-semibold tabular-nums text-zinc-400 text-xs sm:text-sm">
                         {plan.slab1}
                       </span>
                     </div>
@@ -139,7 +154,9 @@ export default function RegistrationSection() {
                       Slab 2 (Current Rate)
                     </span>
                     <div className="flex items-baseline">
-                      <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#111111] tracking-tight">
+                      <span
+                        className={`${fraunces.className} tabular-nums text-2xl sm:text-3xl lg:text-4xl font-semibold text-[#111111] tracking-tight`}
+                      >
                         {plan.slab2}
                       </span>
                     </div>
