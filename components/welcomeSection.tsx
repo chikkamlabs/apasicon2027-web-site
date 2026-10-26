@@ -505,16 +505,17 @@ export default function WelcomeSection() {
             </div>
 
             {/* lg+: text | cards, all on the image */}
-            <div className="hidden lg:grid grid-cols-12 gap-10 items-start">
-              <div className="col-span-7 flex flex-col space-y-3">
-                <IntroText />
-                <MainText />
-                <HighlightsRotator />
-              </div>
-              <div className="col-span-5">
-                <CardGrid className="grid grid-cols-1 gap-3.5" />
-              </div>
-            </div>
+            {/* lg+: text | cards, all on the image */}
+<div className="hidden lg:grid grid-cols-12 gap-10 items-stretch">
+  <div className="col-span-7 flex flex-col gap-10">
+    <IntroText />
+    <MainText />
+    <HighlightsRotator />
+  </div>
+  <div className="col-span-5">
+    <CardGrid className="grid grid-cols-1 gap-3.5" />
+  </div>
+</div>
           </div>
         </div>
 
