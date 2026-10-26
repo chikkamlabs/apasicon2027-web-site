@@ -72,7 +72,7 @@ export default function Header() {
                 className="h-10 sm:h-14 w-auto object-contain shrink-0"
               />
               <span
-                className={`${outfit.className} text-[11px] leading-tight sm:text-base lg:text-lg tracking-tight text-[#111111] whitespace-nowrap`}
+                className={`${outfit.className} text-[20px] leading-tight sm:text-base lg:text-lg tracking-tight text-[#111111] whitespace-nowrap`}
               >
                 ASI | APASICON 2027
               </span>
