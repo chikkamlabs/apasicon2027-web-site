@@ -27,6 +27,13 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // NOTE: section links use "/#id" (not "#id") so they work from any page,
+  // e.g. /registeration or /delegatedata, by navigating to the home page section.
+  const dropdownItem =
+    'block px-4 py-2.5 text-xs xl:text-sm font-medium text-zinc-700 hover:bg-amber-50 hover:text-amber-700 transition-colors';
+  const mobileItem =
+    'block px-3 py-2 text-xs font-medium text-zinc-700 hover:text-amber-600 rounded';
+
   return (
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-300 ${
@@ -35,15 +42,15 @@ export default function Header() {
           : 'bg-white border-b border-zinc-200'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Left Side: ASI Logo & Header Menu */}
-          <div className="flex items-center gap-6 lg:gap-8">
-            {/* Mobile Hamburger Button (3 lines) */}
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20 gap-2">
+          {/* Left Side: Hamburger, ASI Logo, title & Desktop menu */}
+          <div className="flex items-center gap-1.5 sm:gap-4 lg:gap-8 min-w-0">
+            {/* Mobile Hamburger Button */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="lg:hidden p-1.5 shrink-0 text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? (
@@ -53,8 +60,8 @@ export default function Header() {
               )}
             </button>
 
-            {/* ASI Logo */}
-            <Link href="/" className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+            {/* ASI Logo + title (kept tight together) */}
+            <Link href="/" className="flex items-center gap-1 sm:gap-3 min-w-0">
               <Image
                 src="/asi_logo.png"
                 alt="ASI Logo"
@@ -62,34 +69,32 @@ export default function Header() {
                 height={172}
                 priority
                 referrerPolicy="no-referrer"
-                className="h-14 sm:h-14 w-auto object-contain"
+                className="h-10 sm:h-14 w-auto object-contain shrink-0"
               />
               <span
-                className={`${outfit.className} text-sm sm:text-base lg:text-lg tracking-tight text-[#111111] whitespace-nowrap`}
+                className={`${outfit.className} text-[11px] leading-tight sm:text-base lg:text-lg tracking-tight text-[#111111] whitespace-nowrap`}
               >
                 ASI | APASICON 2027
               </span>
             </Link>
 
-            {/* Desktop Navigation Menu (Positioned on the Left with ASI Logo) */}
+            {/* Desktop Navigation Menu */}
             <nav className="hidden lg:flex items-center gap-1 xl:gap-2 text-[13px] xl:text-sm font-semibold tracking-wide text-zinc-800">
-              {/* A. HOME */}
               <Link
-                href="#home"
+                href="/#home"
                 className="px-3 py-2 rounded-md hover:text-amber-600 hover:bg-zinc-50 transition-colors uppercase"
               >
                 HOME
               </Link>
 
-              {/* B. COMMITTEE */}
               <Link
-                href="#committee"
+                href="/#committee"
                 className="px-3 py-2 rounded-md hover:text-amber-600 hover:bg-zinc-50 transition-colors uppercase"
               >
                 COMMITTEE
               </Link>
 
-              {/* C. REGISTRATION (Open on hover) */}
+              {/* REGISTRATION (open on hover) */}
               <div className="relative group">
                 <button
                   type="button"
@@ -99,56 +104,44 @@ export default function Header() {
                   <ChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180 text-zinc-500 group-hover:text-amber-600" />
                 </button>
 
-                {/* Dropdown Menu */}
                 <div className="absolute left-0 top-full pt-2 w-64 hidden group-hover:block z-50">
                   <div className="bg-white rounded-lg shadow-xl border border-zinc-200 py-2 overflow-hidden ring-1 ring-black/5 animate-in fade-in slide-in-from-top-1 duration-150">
-                    <Link
-                      href="/registeration"
-                      className="block px-4 py-2.5 text-xs xl:text-sm font-medium text-zinc-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
-                    >
+                    <Link href="/registeration" className={dropdownItem}>
                       Registration form
                     </Link>
-                    <Link
-                      href="/delegatedata"
-                      className="block px-4 py-2.5 text-xs xl:text-sm font-medium text-zinc-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
-                    >
+                    <Link href="/delegatedata" className={dropdownItem}>
                       Check / Modify Your data
                     </Link>
                     <a
                       href="https://asiindia.org/member-application/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block px-4 py-2.5 text-xs xl:text-sm font-medium text-zinc-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+                      className={dropdownItem}
                     >
                       ASI Membership Registration
                     </a>
-                    <Link
-                      href="#tariffs"
-                      className="block px-4 py-2.5 text-xs xl:text-sm font-medium text-zinc-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
-                    >
+                    <Link href="/#tariffs" className={dropdownItem}>
                       Tariffs
                     </Link>
                   </div>
                 </div>
               </div>
 
-              {/* D. FINALE PRESENTATION */}
               <Link
-                href="#finale-presentation"
+                href="/#finale-presentation"
                 className="px-3 py-2 rounded-md hover:text-amber-600 hover:bg-zinc-50 transition-colors uppercase whitespace-nowrap"
               >
                 FINALE PRESENTATION
               </Link>
 
-              {/* E. GUIDELINES */}
               <Link
-                href="#guidelines"
+                href="/#guidelines"
                 className="px-3 py-2 rounded-md hover:text-amber-600 hover:bg-zinc-50 transition-colors uppercase"
               >
                 GUIDELINES
               </Link>
 
-              {/* F. DOWNLOAD BROCHURES (Open on hover) */}
+              {/* DOWNLOAD BROCHURES (open on hover) */}
               <div className="relative group">
                 <button
                   type="button"
@@ -158,25 +151,15 @@ export default function Header() {
                   <ChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180 text-zinc-500 group-hover:text-amber-600" />
                 </button>
 
-                {/* Dropdown Menu */}
                 <div className="absolute left-0 top-full pt-2 w-64 hidden group-hover:block z-50">
                   <div className="bg-white rounded-lg shadow-xl border border-zinc-200 py-2 overflow-hidden ring-1 ring-black/5 animate-in fade-in slide-in-from-top-1 duration-150">
-                    <Link
-                      href="#scientific-brochure"
-                      className="block px-4 py-2.5 text-xs xl:text-sm font-medium text-zinc-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
-                    >
+                    <Link href="/#scientific-brochure" className={dropdownItem}>
                       Scientific brochure
                     </Link>
-                    <Link
-                      href="#paper-schedule"
-                      className="block px-4 py-2.5 text-xs xl:text-sm font-medium text-zinc-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
-                    >
+                    <Link href="/#paper-schedule" className={dropdownItem}>
                       Paper presentation Schedule
                     </Link>
-                    <Link
-                      href="#poster-schedule"
-                      className="block px-4 py-2.5 text-xs xl:text-sm font-medium text-zinc-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
-                    >
+                    <Link href="/#poster-schedule" className={dropdownItem}>
                       Poster presentation schedule
                     </Link>
                   </div>
@@ -185,7 +168,7 @@ export default function Header() {
             </nav>
           </div>
 
-          {/* At Utmost Right: AP ASI CON Logo */}
+          {/* Utmost Right: AP ASI CON Logo */}
           <div className="flex items-center shrink-0">
             <Link href="/" className="flex items-center">
               <Image
@@ -195,7 +178,7 @@ export default function Header() {
                 height={1254}
                 priority
                 referrerPolicy="no-referrer"
-                className="h-16 sm:h-14 w-auto object-contain"
+                className="h-12 sm:h-14 w-auto object-contain"
               />
             </Link>
           </div>
@@ -206,25 +189,23 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-zinc-200 bg-white px-4 pt-3 pb-6 shadow-lg max-h-[calc(100vh-5rem)] overflow-y-auto">
           <div className="flex flex-col space-y-1 text-sm font-semibold text-zinc-800">
-            {/* A. HOME */}
             <Link
-              href="#home"
+              href="/#home"
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2.5 rounded-md hover:bg-zinc-100 hover:text-amber-600 uppercase"
             >
               HOME
             </Link>
 
-            {/* B. COMMITTEE */}
             <Link
-              href="#committee"
+              href="/#committee"
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2.5 rounded-md hover:bg-zinc-100 hover:text-amber-600 uppercase"
             >
               COMMITTEE
             </Link>
 
-            {/* C. REGISTRATION Dropdown */}
+            {/* REGISTRATION Dropdown */}
             <div className="border-y border-zinc-100 py-1">
               <button
                 type="button"
@@ -243,14 +224,14 @@ export default function Header() {
                   <Link
                     href="/registeration"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 text-xs font-medium text-zinc-700 hover:text-amber-600 rounded"
+                    className={mobileItem}
                   >
                     Registration form
                   </Link>
                   <Link
                     href="/delegatedata"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 text-xs font-medium text-zinc-700 hover:text-amber-600 rounded"
+                    className={mobileItem}
                   >
                     Check / Modify Your data
                   </Link>
@@ -259,14 +240,14 @@ export default function Header() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 text-xs font-medium text-zinc-700 hover:text-amber-600 rounded"
+                    className={mobileItem}
                   >
                     ASI Membership Registration
                   </a>
                   <Link
-                    href="#tariffs"
+                    href="/#tariffs"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 text-xs font-medium text-zinc-700 hover:text-amber-600 rounded"
+                    className={mobileItem}
                   >
                     Tariffs
                   </Link>
@@ -274,25 +255,23 @@ export default function Header() {
               )}
             </div>
 
-            {/* D. FINALE PRESENTATION */}
             <Link
-              href="#finale-presentation"
+              href="/#finale-presentation"
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2.5 rounded-md hover:bg-zinc-100 hover:text-amber-600 uppercase"
             >
               FINALE PRESENTATION
             </Link>
 
-            {/* E. GUIDELINES */}
             <Link
-              href="#guidelines"
+              href="/#guidelines"
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2.5 rounded-md hover:bg-zinc-100 hover:text-amber-600 uppercase"
             >
               GUIDELINES
             </Link>
 
-            {/* F. DOWNLOAD BROCHURES Dropdown */}
+            {/* DOWNLOAD BROCHURES Dropdown */}
             <div className="border-t border-zinc-100 pt-1">
               <button
                 type="button"
@@ -309,23 +288,23 @@ export default function Header() {
               {mobileBrochuresOpen && (
                 <div className="pl-4 pr-2 py-1 space-y-1 bg-zinc-50 rounded-md mt-1">
                   <Link
-                    href="#scientific-brochure"
+                    href="/#scientific-brochure"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 text-xs font-medium text-zinc-700 hover:text-amber-600 rounded"
+                    className={mobileItem}
                   >
                     Scientific brochure
                   </Link>
                   <Link
-                    href="#paper-schedule"
+                    href="/#paper-schedule"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 text-xs font-medium text-zinc-700 hover:text-amber-600 rounded"
+                    className={mobileItem}
                   >
                     Paper presentation Schedule
                   </Link>
                   <Link
-                    href="#poster-schedule"
+                    href="/#poster-schedule"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 text-xs font-medium text-zinc-700 hover:text-amber-600 rounded"
+                    className={mobileItem}
                   >
                     Poster presentation schedule
                   </Link>

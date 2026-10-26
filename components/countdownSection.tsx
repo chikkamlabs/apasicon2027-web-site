@@ -77,14 +77,14 @@ export default function CountdownSection() {
   };
 
   const units = [
-    { value: timeLeft.days, label: 'Days', border: 'border-[#D4AF37]', text: 'text-[#187A83]' },
-    { value: timeLeft.hours, label: 'Hours', border: 'border-[#187A83]', text: 'text-[#D4AF37]' },
-    { value: timeLeft.mins, label: 'Mins', border: 'border-[#D4AF37]', text: 'text-[#187A83]' },
-    { value: timeLeft.sec, label: 'Sec', border: 'border-[#187A83]', text: 'text-[#D4AF37]' },
+    { value: timeLeft.days, label: 'Days', border: 'border-[#D4AF37]', text: 'text-[#187A83]', big: true },
+    { value: timeLeft.hours, label: 'Hours', border: 'border-[#187A83]', text: 'text-[#D4AF37]', big: false },
+    { value: timeLeft.mins, label: 'Mins', border: 'border-[#D4AF37]', text: 'text-[#187A83]', big: false },
+    { value: timeLeft.sec, label: 'Sec', border: 'border-[#187A83]', text: 'text-[#D4AF37]', big: false },
   ];
 
   return (
-    <section className="relative z-10 py-10 sm:py-12 md:py-14 lg:py-16 pb-24 sm:pb-28">
+    <section className="relative z-10 py-10 sm:py-12 md:py-14 lg:py-16 pb-14 sm:pb-16">
       {/* No background of its own: it sits on the shared hero background */}
       <div className="relative z-10 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <motion.div
@@ -113,19 +113,28 @@ export default function CountdownSection() {
           {/* Countdown units */}
           <motion.div
             variants={popItemVariants}
-            className="flex items-center justify-center gap-2 sm:gap-3 lg:gap-4 shrink-0"
+            className="grid grid-cols-3 gap-2 w-full max-w-sm sm:max-w-none sm:w-auto sm:flex sm:items-center sm:justify-center sm:gap-3 lg:gap-4 shrink-0"
           >
             {units.map((u) => (
               <motion.div
                 key={u.label}
                 whileHover={{ scale: 1.06 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                className={`${unitBox} border-2 ${u.border}`}
+                className={`${unitBox} border-2 ${u.border} justify-center ${
+                  u.big
+                    ? 'col-span-3 mx-auto px-8 py-3 sm:mx-0 sm:px-4 sm:py-2.5 md:px-5 md:py-3'
+                    : 'px-2 sm:px-4'
+                }`}
               >
-                <span suppressHydrationWarning className={unitNum}>
+                <span
+                  suppressHydrationWarning
+                  className={`${unitNum} ${u.big ? 'text-3xl sm:text-3xl md:text-4xl' : ''}`}
+                >
                   {fmt(u.value)}
                 </span>
-                <span className={`${unitLabel} ${u.text}`}>{u.label}</span>
+                <span className={`${unitLabel} ${u.text} ${u.big ? 'text-sm sm:text-xs md:text-sm' : ''}`}>
+                  {u.label}
+                </span>
               </motion.div>
             ))}
           </motion.div>
@@ -133,14 +142,14 @@ export default function CountdownSection() {
           {/* Subtext */}
           <motion.div variants={popItemVariants} className="flex items-center shrink-0">
             <span className="font-serif italic text-xs sm:text-sm lg:text-base font-semibold tracking-wide text-[#111111]/75 bg-white/90 px-3.5 py-1.5 rounded-full border border-[#D4AF37]/40 shadow-sm">
-              (from now to 26th Aug)
+              (Mark Your Date - 26th Aug 2027)
             </span>
           </motion.div>
         </motion.div>
       </div>
 
       {/* Smooth fade into the next section (change `to-white` if Welcome has another bg) */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-28 sm:h-32 bg-gradient-to-b from-transparent via-white/70 to-white" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-14 sm:h-16 bg-gradient-to-b from-transparent via-white/70 to-white" />
 
       {/* Discover button */}
       {/* <div className="absolute left-1/2 bottom-4 -translate-x-1/2 z-30">

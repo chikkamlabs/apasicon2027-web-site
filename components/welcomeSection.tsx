@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Antonio, Cormorant_Garamond, DM_Serif_Display, Michroma } from 'next/font/google';
 import { motion, AnimatePresence, useInView, type Variants } from 'motion/react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 // "APASICON 2027 Rajahmundry": Antonio (golden)
 const headingFont = Antonio({
@@ -131,6 +132,13 @@ const themeV: Variants = {
     filter: 'blur(0px)',
     transition: { duration: 0.9, ease, delay: 0.1 },
   },
+};
+
+// Mobile card slide: direction 1 = next (enters from right), -1 = previous (enters from left)
+const cardSlideV: Variants = {
+  enter: (dir: number) => ({ opacity: 0, x: dir * 28 }),
+  center: { opacity: 1, x: 0 },
+  exit: (dir: number) => ({ opacity: 0, x: dir * -28 }),
 };
 
 /* ---------- helpers ---------- */
@@ -340,22 +348,41 @@ function HighlightsRotator() {
 
 /* ---------- cards ---------- */
 
-/** Phones: one card, same spot, changes by itself once it is on screen. */
+/** Phones: one card, same spot. Auto-advances while on screen; left/right arrows go to the previous/next card. */
 function CardStage() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.6 });
-  const [active, setActive] = useRotator(CARDS.length, 3000, inView);
+  const [[active, direction], setState] = useState<[number, number]>([0, 1]);
+
+  const paginate = (dir: number) =>
+    setState(([prev]) => [(prev + dir + CARDS.length) % CARDS.length, dir]);
+
+  const goTo = (i: number) =>
+    setState(([prev]) => [i, i >= prev ? 1 : -1]);
+
+  // Auto-advance. The timer restarts after every change, so a manual tap gets a full 3s before moving on.
+  useEffect(() => {
+    if (!inView) return;
+    const t = setTimeout(() => paginate(1), 3000);
+    return () => clearTimeout(t);
+  }, [active, inView]);
+
   const card = CARDS[active];
+
+  const arrowClass =
+    'flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#111111]/15 bg-white text-[#111111] shadow-sm active:scale-95 active:bg-zinc-100 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#187A83]';
 
   return (
     <div ref={ref} className="md:hidden">
       <div className="relative min-h-[150px] bg-white border border-[#111111]/10 border-l-4 border-l-[#187A83] rounded-xl p-4 shadow-sm overflow-hidden">
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait" custom={direction} initial={false}>
           <motion.div
             key={card.title}
-            initial={{ opacity: 0, x: 28 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -28 }}
+            custom={direction}
+            variants={cardSlideV}
+            initial="enter"
+            animate="center"
+            exit="exit"
             transition={{ duration: 0.4, ease: 'easeOut' }}
           >
             <span className="text-[10px] font-bold tracking-widest text-[#D4AF37]">
@@ -371,18 +398,38 @@ function CardStage() {
         </AnimatePresence>
       </div>
 
-      <div className="mt-3 flex items-center justify-center gap-1.5">
-        {CARDS.map((c, i) => (
-          <button
-            key={c.title}
-            type="button"
-            onClick={() => setActive(i)}
-            aria-label={`Show card ${i + 1}: ${c.title}`}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              i === active ? 'w-6 bg-[#187A83]' : 'w-1.5 bg-[#111111]/20'
-            }`}
-          />
-        ))}
+      <div className="mt-3 flex items-center justify-center gap-4">
+        <button
+          type="button"
+          onClick={() => paginate(-1)}
+          aria-label="Previous card"
+          className={arrowClass}
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+
+        <div className="flex items-center gap-1.5">
+          {CARDS.map((c, i) => (
+            <button
+              key={c.title}
+              type="button"
+              onClick={() => goTo(i)}
+              aria-label={`Show card ${i + 1}: ${c.title}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                i === active ? 'w-6 bg-[#187A83]' : 'w-1.5 bg-[#111111]/20'
+              }`}
+            />
+          ))}
+        </div>
+
+        <button
+          type="button"
+          onClick={() => paginate(1)}
+          aria-label="Next card"
+          className={arrowClass}
+        >
+          <ChevronRight className="h-5 w-5" />
+        </button>
       </div>
     </div>
   );
@@ -423,7 +470,7 @@ export default function WelcomeSection() {
     <>
       <section
         id="welcome-section"
-        className="relative bg-white px-3 sm:px-6 lg:px-8 pt-8 pb-6 sm:pt-12 sm:pb-10 lg:pt-14 lg:pb-12 scroll-mt-6"
+        className="relative bg-white px-3 sm:px-6 lg:px-8 pt-3 pb-6 sm:pt-5 sm:pb-10 lg:pt-6 lg:pb-12 scroll-mt-6"
       >
         {/* Heading: same width as the image container, so its left edge lines up with the image */}
         <div className="max-w-7xl mx-auto mb-4 sm:mb-6 lg:mb-8">
@@ -480,24 +527,24 @@ export default function WelcomeSection() {
         {/* Ticker: lives on the section background (no band, no lines).
             Negative margins cancel the section padding so it runs edge to edge. */}
         <div className="relative overflow-hidden -mx-3 sm:-mx-6 lg:-mx-8 mt-8 sm:mt-10 lg:mt-12 select-none">
-        <motion.div
-          className="flex whitespace-nowrap will-change-transform"
-          animate={{ x: ['0%', '-50%'] }}
-          transition={{ ease: 'linear', duration: 12, repeat: Infinity }}
-        >
-          {[0, 1].map((n) => (
-            <div
-              key={n}
-              className="flex items-center shrink-0 space-x-6 sm:space-x-8 md:space-x-10 pr-6 sm:pr-8 md:pr-10"
-            >
-              <span
-                className={`${tickerFont.className} text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-wide text-[#111111] uppercase`}
+          <motion.div
+            className="flex whitespace-nowrap will-change-transform"
+            animate={{ x: ['0%', '-50%'] }}
+            transition={{ ease: 'linear', duration: 12, repeat: Infinity }}
+          >
+            {[0, 1].map((n) => (
+              <div
+                key={n}
+                className="flex items-center shrink-0 space-x-6 sm:space-x-8 md:space-x-10 pr-6 sm:pr-8 md:pr-10"
               >
-                {MARQUEE_TEXT}
-              </span>
-            </div>
-          ))}
-        </motion.div>
+                <span
+                  className={`${tickerFont.className} text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-wide text-[#111111] uppercase`}
+                >
+                  {MARQUEE_TEXT}
+                </span>
+              </div>
+            ))}
+          </motion.div>
         </div>
       </section>
     </>

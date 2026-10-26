@@ -3,8 +3,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Outfit, Roboto_Slab } from 'next/font/google';
-import { motion, AnimatePresence, useInView } from 'motion/react';
-import { User, ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence, useInView, type Variants } from 'motion/react';
+import { User, ChevronLeft, ChevronRight } from 'lucide-react';
 import BgAura from './bgaura';
 
 // Modern font for headings
@@ -138,18 +138,13 @@ const TONES: Record<
   },
 };
 
-/** Steps 0..length-1 on a timer, only while `enabled` (i.e. on screen). */
-function useRotator(length: number, delay: number, enabled: boolean) {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    if (!enabled) return;
-    const t = setTimeout(() => setIndex((p) => (p + 1) % length), delay);
-    return () => clearTimeout(t);
-  }, [index, enabled, length, delay]);
-
-  return [index, setIndex] as const;
-}
+// Phone slide: direction 1 = next (enters from right), -1 = previous (enters from left).
+// The outgoing card leaves the opposite way at the same time.
+const slideV: Variants = {
+  enter: (dir: number) => ({ opacity: 0, x: dir > 0 ? '100%' : '-100%' }),
+  center: { opacity: 1, x: 0 },
+  exit: (dir: number) => ({ opacity: 0, x: dir > 0 ? '-100%' : '100%' }),
+};
 
 /** One member: photo + name + designation. `stage` = the big phone version. */
 function MemberCard({
@@ -171,7 +166,7 @@ function MemberCard({
       <div
         className={`relative overflow-hidden rounded-2xl bg-gradient-to-b from-zinc-100 ${t.bg} border-4 ${t.border} ${t.shadow} group/photo cursor-default ${
           stage
-            ? 'w-[78vw] max-w-[19rem] h-[24rem]'
+            ? 'w-[68vw] max-w-[19rem] h-[24rem]'
             : 'w-48 sm:w-56 md:w-60 h-64 sm:h-72 md:h-80'
         }`}
       >
@@ -226,32 +221,73 @@ function MemberCard({
 }
 
 /**
- * Phones only: the outgoing card slides out to the left WHILE the next card
- * slides in from the right at the same time, so there is never an empty gap.
- * Both cards share the same grid cell, so they overlap during the hand-off.
+ * Phones only: the outgoing card slides out WHILE the next card slides in at the
+ * same time (both share one grid cell, so there is never an empty gap).
+ * A left and a right arrow sit beside the photo to go to the previous / next member.
  */
 function MobileMemberStage({ members, tone }: { members: Member[]; tone: Tone }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.4 });
-  // ~3.4s hold + ~0.6s for the simultaneous out / in animation
-  const [active, setActive] = useRotator(members.length, 2000, inView);
+  const [[active, direction], setState] = useState<[number, number]>([0, 1]);
+
+  const paginate = (dir: number) =>
+    setState(([prev]) => [(prev + dir + members.length) % members.length, dir]);
+
+  const goTo = (i: number) => setState(([prev]) => [i, i >= prev ? 1 : -1]);
+
+  // Auto-advance. The timer restarts after every change, so a manual tap
+  // gets a full pause before the cards move on by themselves again.
+  useEffect(() => {
+    if (!inView) return;
+    const t = setTimeout(() => paginate(1), 2600);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active, inView]);
+
   const member = members[active];
+
+  // Plain arrow only: no circle, no background
+  const arrowClass = `absolute top-[12.75rem] -translate-y-1/2 z-20 flex h-14 w-12 items-center justify-center bg-transparent p-0 active:scale-90 transition focus:outline-none ${
+    tone === 'gold' ? 'text-[#B8941F]' : 'text-[#187A83]'
+  }`;
 
   return (
     <div ref={ref} className="md:hidden">
-      <div className="grid justify-items-center overflow-hidden py-3">
-        <AnimatePresence initial={false} mode="sync">
-          <motion.div
-            key={`${member.name}-${active}`}
-            className="col-start-1 row-start-1"
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '-100%' }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <MemberCard member={member} tone={tone} variant="stage" />
-          </motion.div>
-        </AnimatePresence>
+      <div className="relative">
+        <div className="grid justify-items-center overflow-hidden py-3">
+          <AnimatePresence initial={false} mode="sync" custom={direction}>
+            <motion.div
+              key={`${member.name}-${active}`}
+              custom={direction}
+              variants={slideV}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="col-start-1 row-start-1"
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <MemberCard member={member} tone={tone} variant="stage" />
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Arrows beside the image */}
+        <button
+          type="button"
+          onClick={() => paginate(-1)}
+          aria-label="Previous member"
+          className={`${arrowClass} left-1`}
+        >
+          <ChevronLeft className="h-8 w-8" strokeWidth={2.5} />
+        </button>
+        <button
+          type="button"
+          onClick={() => paginate(1)}
+          aria-label="Next member"
+          className={`${arrowClass} right-1`}
+        >
+          <ChevronRight className="h-8 w-8" strokeWidth={2.5} />
+        </button>
       </div>
 
       {/* Progress dots */}
@@ -260,7 +296,7 @@ function MobileMemberStage({ members, tone }: { members: Member[]; tone: Tone })
           <button
             key={`${m.name}-${i}`}
             type="button"
-            onClick={() => setActive(i)}
+            onClick={() => goTo(i)}
             aria-label={`Show ${m.name}`}
             className={`h-1.5 rounded-full transition-all duration-300 ${
               i === active
@@ -300,13 +336,6 @@ function DesktopCarousel({ members, tone, keyPrefix }: { members: Member[]; tone
 }
 
 export default function CommitteeSection() {
-  const scrollToRegistration = () => {
-    const el = document.getElementById('tariffs');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <section
       id="committee"
@@ -405,9 +434,6 @@ export default function CommitteeSection() {
           <MobileMemberStage members={AP_ASI_LOCAL_LEADERSHIP} tone="teal" />
           <DesktopCarousel members={AP_ASI_LOCAL_LEADERSHIP} tone="teal" keyPrefix="local-leadership" />
         </div>
-
-        {/* Transition Bridge to Registration Section */}
-      
       </motion.div>
     </section>
   );
